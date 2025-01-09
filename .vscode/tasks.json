@@ -1,0 +1,184 @@
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "C: build active dir (linux, GCC)",
+            "command": "/usr/bin/gcc",
+            "args": [
+                "-Wall",
+                "-g",
+                "simpleSdlWrapper/*.c",
+                "${relativeFileDirname}/lib/*.c",
+                "${relativeFileDirname}/*.c",
+                "-IsimpleSdlWrapper",
+                "-I${relativeFileDirname}/",
+                "-I/usr/include/SDL2",
+                "-D_REENTRANT",
+                "-lm",
+                "-lSDL2",
+                "-lSDL2_mixer",
+                "-lSDL2_image",
+                "-lSDL2_ttf",
+                "-o",
+                "Debug/${fileDirnameBasename}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": {
+                "base": "$gcc",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}"
+                ]
+            },
+            "group": "build"
+        },
+        {
+            "type": "shell",
+            "label": "C: build active dir (windows, MSVC)",
+            "command": "cl.exe",
+            "args": [
+                "/Zi",
+                "/W3",
+                "/EHsc",
+                "/nologo",
+                "/I${relativeFileDirname}\\",
+                "/IsimpleSdlWrapper",
+                "/Isdl2\\include",
+                "/Isdl2image\\include",
+                "/Isdl2mixer\\include",
+                "/Isdl2ttf\\include",
+                "/Fe:Debug\\${fileDirnameBasename}.exe",
+                "/Fo:${relativeFileDirname}\\Debug\\",
+                "/Fd:${relativeFileDirname}\\Debug\\",
+                "simpleSdlWrapper\\*.c",
+                "${relativeFileDirname}\\lib\\*.c",
+                "${relativeFileDirname}\\*.c",
+                "/link",
+                "/SUBSYSTEM:WINDOWS",
+                "/DEBUG",
+                "/INCREMENTAL",
+                "/ILK:${relativeFileDirname}\\Debug\\${fileDirnameBasename}.ilk",
+                "/LIBPATH:sdl2\\libs",
+                "/LIBPATH:sdl2image\\libs",
+                "/LIBPATH:sdl2mixer\\libs",
+                "/LIBPATH:sdl2ttf\\libs",
+                "SDL2.lib",
+                "SDL2main.lib",
+                "SDL2_image.lib",
+                "SDL2_ttf.lib",
+                "SDL2_mixer.lib",
+                "Shell32.lib"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "shell": {
+                    "executable": "cmd.exe",
+                    "args": [
+                        "/C",
+                        "\"C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/Tools/VsDevCmd.bat\"",
+                        //"\"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/Tools/VsDevCmd.bat\"",
+                        "&&"
+                    ]
+                }
+            },
+            "problemMatcher": {
+                "base": "$msCompile",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}"
+                ]
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "C: build active dir (windows, GCC)",
+            "command": "gcc.exe",
+            "args": [
+                "-Wall",
+                "-g",
+                "simpleSdlWrapper/*.c",
+                "${relativeFileDirname}/lib/*.c",
+                "${relativeFileDirname}/*.c",
+                "-IsimpleSdlWrapper",
+                "-I${relativeFileDirname}/",
+                "-I/c/msys64/ucrt64/include/SDL2",
+                "-D_REENTRANT",
+                "-lm",
+                "-Wl,-subsystem,windows",
+                "-lmingw32",
+                "-lSDL2main",
+                "-lSDL2",
+                "-lSDL2_mixer",
+                "-lSDL2_image",
+                "-lSDL2_ttf",
+                "-o",
+                "Debug/${fileDirnameBasename}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "shell": {
+                    "executable": "C:\\msys64\\msys2_shell.cmd",
+                    "args": [
+                        "-defterm",
+                        "-here",
+                        "-no-start",
+                        "-ucrt64",
+                        "-c \""
+                    ]
+                }
+            },
+            "problemMatcher": {
+                "base": "$gcc",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}"
+                ]
+            },
+            "group": "build"
+        },
+        {
+            "type": "shell",
+            "label": "C: build active dir (macOS, clang)",
+            "command": "/usr/bin/clang",
+            "args": [
+                "-std=c17",
+                "-Wmost",
+                "-g",
+                "simpleSdlWrapper/*.c",
+                "${relativeFileDirname}/lib/*.c",
+                "${relativeFileDirname}/*.c",
+                "-IsimpleSdlWrapper",
+                "-I${relativeFileDirname}/",
+                "-I/usr/local/include/SDL2",
+                "-I/opt/homebrew/include/SDL2",
+                "-D_REENTRANT",
+                "-L/opt/homebrew/lib",
+                "-lm",
+                "-lSDL2",
+                "-lSDL2_mixer",
+                "-lSDL2_image",
+                "-lSDL2_ttf",
+                "-o",
+                "Debug/${fileDirnameBasename}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": {
+                "base": "$gcc",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}"
+                ]
+            },
+            "group": "build"
+        }
+    ],
+    "version": "2.0.0"
+}

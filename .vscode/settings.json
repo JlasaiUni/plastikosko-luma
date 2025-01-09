@@ -1,0 +1,15 @@
+{
+    "editor.formatOnSave": true,
+    "C_Cpp.clang_format_fallbackStyle": "{BasedOnStyle: Microsoft, InsertBraces: true}",
+    "files.associations": {
+        "imagen.h": "c",
+        "text.h": "c",
+        "stdio.h": "c",
+        "ebentoak.h": "c",
+        "graphics.h": "c",
+        "sdl.h": "c",
+        "soinua.h": "c",
+        "math.h": "c",
+        "corecrt_math.h": "c"
+    }
+}
