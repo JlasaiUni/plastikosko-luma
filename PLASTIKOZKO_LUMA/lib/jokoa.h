@@ -5,6 +5,6 @@
 
 void jokoaAurkeztu(void);
 EGOERA jokatu(void);
-int jokoAmaierakoa(EGOERA egoera);
+int IrabaziedoGaldu(EGOERA egoera);
 
 #endif

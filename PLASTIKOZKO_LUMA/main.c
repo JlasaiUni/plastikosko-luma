@@ -19,7 +19,6 @@
 
 int main(int argc, char *str[])
 {
-    int jarraitu = 0;
     EGOERA egoera;
 
     if (sgHasieratu() == -1)
@@ -30,12 +29,9 @@ int main(int argc, char *str[])
     textuaGaitu();
     audioInit();
 
-    jokoaAurkeztu();
-    do
-    {
-        egoera = jokatu();
-        jarraitu = jokoAmaierakoa(egoera);
-    } while (jarraitu);
+    egoera = jokatu();
+    IrabaziedoGaldu(egoera);
+
     audioTerminate();
     sgItxi();
     return 0;

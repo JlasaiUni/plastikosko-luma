@@ -23,4 +23,25 @@ typedef struct
     MOTA mota;
 } JOKO_ELEMENTUA;
 
+typedef struct S_GURE_GAUZAK
+{
+    int idIrudi;
+    int text;
+    int jokalaria;
+
+} GURE_GAUZAK;
+
+typedef struct S_ETSAILAK
+{
+    double x, y;
+    double dx, dy;
+
+} ETSAILAK;
+
+typedef struct S_SARIAK
+{
+    double x, y;
+
+} SARIAK;
+
 #endif

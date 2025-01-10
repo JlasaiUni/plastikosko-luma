@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "ebentoak.h"
 #include "graphics.h"
 #include "imagen.h"
@@ -6,13 +7,70 @@
 #include "text.h"
 #include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-#define JOKOA_SOUND "./sound/132TRANCE_02.wav"
-#define JOKOA_PLAYER_IMAGE "./img/invader.bmp"
-#define JOKOA_SOUND_WIN "./sound/BugleCall.wav"
-#define JOKOA_SOUND_LOOSE "./sound/terminator.wav"
-#define BUKAERA_SOUND_1 "./sound/128NIGHT_01.wav"
+void AldeaAukeratuPelota(double *x, double *y);
+void PelotaMarraztu(ETSAILAK *pelota);
+void PelotakMugitu(ETSAILAK *etsaila, double EtsailaPosX, double EtsailaPosY, double abiadura);
+void PelotakIniziau(ETSAILAK *etsaila, double x, double y);
+void EtsailarenTiro(void);
 
+void AldeaAukeratuPelota(double *x, double *y)
+{
+    int aldea = rand() % 4; // 0tik 3ra
+
+    switch (aldea)
+    {
+    case 0:
+        *x = 0;
+        *y = rand() % (SCREEN_HEIGHT - 32);
+        break;
+    case 1:
+        *x = rand() % (SCREEN_WIDTH - 32);
+        *y = 0;
+        break;
+    case 2:
+        *x = rand() % (SCREEN_WIDTH - 32);
+        *y = SCREEN_HEIGHT - 32;
+        break;
+    case 3:
+        *x = SCREEN_WIDTH - 32;
+        *y = rand() % (SCREEN_HEIGHT - 32);
+        break;
+    }
+}
+
+void PelotakIniziau(ETSAILAK *etsaila, double x, double y)
+{
+    etsaila->x = x;
+    etsaila->y = y;
+    etsaila->dx = 0.0;
+    etsaila->dy = 0.0;
+}
+
+void PelotakMugitu(ETSAILAK *etsaila, double EtsailaPosX, double EtsailaPosY, double abiadura)
+{
+    double dx, dy, Luzeera;
+
+    dx = EtsailaPosX - etsaila->x;
+    dy = EtsailaPosY - etsaila->y;
+
+    Luzeera = sqrt(dx * dx + dy * dy);
+
+    dx /= Luzeera;
+    dy /= Luzeera;
+
+    etsaila->x += dx * abiadura;
+    etsaila->y += dy * abiadura;
+}
+
+void PelotaMarraztu(ETSAILAK *pelota)
+{
+    arkatzKoloreaEzarri(0xFF, 0x00, 0x00);
+    zirkuluaMarraztu(pelota->x, pelota->y, 10);
+}
+
+/*
 typedef struct
 {
     int x, y;
@@ -45,7 +103,7 @@ Enemy createEnemy(int x, int y, int width, int height, int dx, int dy, SDL_Rende
     enemy.height = height;
     enemy.dx = dx;
     enemy.dy = dy;
-    enemy.texture = loadTexture("enemy.bmp", renderer);
+    enemy.texture = loadTexture("./img/invader.bmp", renderer);
 
     if (enemy.texture == NULL)
     {
@@ -72,3 +130,4 @@ void updateEnemy(Enemy *enemy)
         enemy->dy = -enemy->dy;
     }
 }
+*/

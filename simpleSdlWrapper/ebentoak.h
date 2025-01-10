@@ -4,8 +4,8 @@
 
 typedef struct S_POSIZIOA
 {
-    int x;
-    int y;
+    float x;
+    float y;
 } POSIZIOA;
 
 /*

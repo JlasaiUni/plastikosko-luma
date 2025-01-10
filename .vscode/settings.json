@@ -10,6 +10,9 @@
         "sdl.h": "c",
         "soinua.h": "c",
         "math.h": "c",
-        "corecrt_math.h": "c"
+        "corecrt_math.h": "c",
+        "jokalariaren_funtzioak.h": "c",
+        "stdlib.h": "c",
+        "gurefuntzioak.h": "c"
     }
 }

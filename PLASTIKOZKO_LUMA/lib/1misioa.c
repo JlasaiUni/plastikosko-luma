@@ -10,50 +10,101 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-EGOERA jokatu(void)
-{
-    EGOERA egoera = JOLASTEN;
+GURE_GAUZAK gureGauzak;
+ETSAILAK etsailak;
 
-    jokoaAurkeztu();
-    egoera = LehenengoMisioa();
+EGOERA LehenengoMisioa(void)
+{
+    int ebentu = 0, irten = 0, bai = 0, kont = 0, i;
+    EGOERA egoera = JOLASTEN;
+    char contadorTexto[50];
+
+    ETSAILAK etsailak[4];
+
+    // Inicializar pelotas con posiciones y colores diferentes
+    PelotakIniziau(&etsailak[0], 0, 200);   // Pelota 1
+    PelotakIniziau(&etsailak[1], 400, 0);   // Pelota 2
+    PelotakIniziau(&etsailak[2], 600, 200); // Pelota 3
+    PelotakIniziau(&etsailak[3], 50, 400);  // Pelota 4
+
+    double jokalariaPosx = 300, jokalariaPosy = 200; // jokalariaren esaugarriak
+    double abiadura = 0.2;
+
+    double disparoVelocidad = 0.5, luzeera, luzeeraSariaJokaliria;
+    double disparoPosX, disparoPosY;         // disparuan posisioa
+    double disparoDx = 0.0, disparoDy = 0.0; // disparuan direxioa
+    int disparoBai = 0;                      // disparua aktibauta edo ez
+
+    // hasierako imagenak kargatzeko
+    gureGauzak.jokalaria = irudiaKargatu("./img/invader.bmp");
+    irudiaMugitu(gureGauzak.jokalaria, disparoPosX, disparoPosY);
+
+    while (kont < 25 && !irten)
+    {
+        ebentu = ebentuaJasoGertatuBada();
+        const Uint8 *keystate = SDL_GetKeyboardState(NULL); // teklak detektatzeko
+
+        // imagenak (while baten barruan dazenez bein eta berriz kargatzen die)
+        pantailaGarbitu();
+        irudiaMugitu(gureGauzak.idIrudi, jokalariaPosx, jokalariaPosy);
+        textuaIdatzi(10, 20, "Sakatu irudia");
+        textuaIdatzi(10, 60, "Lortu 25 puntu");
+
+        // etsailak marraztu eta mogitu
+        for (i = 0; i < 6; i++)
+        {
+            PelotaMarraztu(&etsailak[i]);
+            PelotakMugitu(&etsailak[i], jokalariaPosx, jokalariaPosy, 0.05);
+        }
+        JokalariMugimendu(&jokalariaPosy, &jokalariaPosx);
+        // imagena berriz kargau
+        irudiaMugitu(gureGauzak.jokalaria, jokalariaPosx, jokalariaPosy);
+
+        // disparua eta etsailen arteko kolisioak detektatu + etsailen eta jokalarien arteko kolisioa
+        for (i = 0; i < 6; i++)
+        {
+            luzeera = (etsailak[i].x - disparoPosX) * (etsailak[i].x - disparoPosX) +
+                      (etsailak[i].y - disparoPosY) * (etsailak[i].y - disparoPosY);
+
+            if (luzeera < 30)
+            {
+                AldeaAukeratuPelota(&etsailak[i].x, &etsailak[i].y);
+                kont++;
+            }
+
+            luzeera = (etsailak[i].x - jokalariaPosx) * (etsailak[i].x - jokalariaPosx) +
+                      (etsailak[i].y - jokalariaPosy) * (etsailak[i].y - jokalariaPosy);
+
+            if (luzeera < 20)
+            {
+                irten = 1;
+            }
+        }
+
+        // disparuan mogimendua
+        Disparoa(ebentu, &disparoPosX, &disparoPosY, &disparoDx, &disparoDy, &disparoBai, jokalariaPosx, jokalariaPosy,
+                 disparoVelocidad);
+        // kontadoria
+        sprintf(contadorTexto, "Puntuazioa: %d", kont);
+        textuaIdatzi(10, 40, contadorTexto);
+
+        irudiakMarraztu();  // Redibujar las imágenes
+        pantailaBerriztu(); // Refrescar la pantalla
+    }
+
+    if (!irten)
+    {
+        egoera = IRABAZI;
+    }
+    else
+    {
+        egoera = GALDU;
+    }
+
+    pantailaGarbitu();
+    pantailaBerriztu();
 
     return egoera;
-}
-
-int IrabaziedoGaldu(EGOERA egoera)
-{
-    int ebentu, BUKAERA = 0;
-
-    if (egoera == GALDU)
-    {
-        while (!BUKAERA)
-        {
-            ebentu = ebentuaJasoGertatuBada();
-
-            if (ebentu == TECLA_RETURN)
-            {
-                BUKAERA = 1;
-            }
-
-            BUKAERA_GALDU();
-        }
-    }
-
-    if (egoera == IRABAZI)
-
-    {
-        while (!BUKAERA)
-        {
-            ebentu = ebentuaJasoGertatuBada();
-
-            if (ebentu == TECLA_RETURN)
-            {
-                BUKAERA = 1;
-            }
-
-            BUKAERA_IRABAZI();
-        }
-    }
 }
 
 /* #include "jokoa.h"
